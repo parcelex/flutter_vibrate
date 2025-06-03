@@ -1,7 +1,9 @@
 package flutter.plugins.vibrate;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Vibrator;
+import android.os.VibratorManager;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.BinaryMessenger;

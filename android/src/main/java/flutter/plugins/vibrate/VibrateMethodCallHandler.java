@@ -20,14 +20,9 @@ class VibrateMethodCallHandler implements MethodChannel.MethodCallHandler {
         this.legacyVibrator = Build.VERSION.SDK_INT < 26;
     }
 
-    @SuppressWarnings("deprecation")
     private void vibrate(int duration) {
-        if (hasVibrator) {
-            if (legacyVibrator) {
-                vibrator.vibrate(duration);
-            } else {
-                vibrator.vibrate(VibrationEffect.createOneShot(duration, VibrationEffect.DEFAULT_AMPLITUDE));
-            }
+        if (hasVibrator && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator.vibrate(VibrationEffect.createOneShot(duration, VibrationEffect.DEFAULT_AMPLITUDE));
         }
     }
 
