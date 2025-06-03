@@ -14,7 +14,15 @@ public class VibratePlugin implements FlutterPlugin {
     public void onAttachedToEngine(FlutterPluginBinding binding) {
         final Context context = binding.getApplicationContext();
         final BinaryMessenger messenger = binding.getBinaryMessenger();
-        final Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+        
+        final Vibrator vibrator;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            VibratorManager vibratorManager = (VibratorManager) context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE);
+            vibrator = vibratorManager.getDefaultVibrator();
+        } else {
+            vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+        }
+
         final VibrateMethodCallHandler methodCallHandler = new VibrateMethodCallHandler(vibrator);
 
         this.methodChannel = new MethodChannel(messenger, "vibrate");
